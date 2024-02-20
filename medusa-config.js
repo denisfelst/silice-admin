@@ -23,10 +23,10 @@ try {
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS =
-  process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001"
+  process.env.ADMIN_CORS || "http://localhost:7000/,http://localhost:7001/"
 
 // CORS to avoid issues when consuming Medusa from a client
-const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000"
+const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000/"
 
 const DATABASE_URL =
   process.env.DATABASE_URL || "postgres://localhost/medusa-starter-default"
@@ -43,6 +43,15 @@ const plugins = [
     options: {
       upload_dir: "uploads",
     },
+  },
+  {
+    resolve: `medusa-plugin-sendgrid`,
+    options: {
+      api_key: process.env.SENDGRID_API_KEY,
+      from: "denisfelstguinea@gmail.com",
+      order_placed_template: 
+        process.env.SENDGRID_TEMPLATE_KEY
+    }
   },
   {
     resolve: "medusa-payment-stripe",
